@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY main.py main.py
+ADD python-files.tar.gz .
 COPY .env .env
 
 CMD [ "python", "./main.py" ]

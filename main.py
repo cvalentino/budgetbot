@@ -1,12 +1,15 @@
 import discord
 import os
 from dotenv import load_dotenv
+from MessageConsumer import MessageConsumer
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 intents = discord.Intents.default()
 intents.message_content = True
+
+consumer = MessageConsumer()
 
 client = discord.Client(intents=intents)
 
@@ -19,8 +22,11 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    content = message.content
+    response = consumer.consume_message(content)
+
+    if response:
+        await message.channel.send(response)
 
 client.run(TOKEN)
 
