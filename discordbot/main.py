@@ -1,7 +1,7 @@
-import discord
 import os
 from dotenv import load_dotenv
-from MessageConsumer import MessageConsumer
+from messageconsumer import MessageConsumer
+import discord
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')

@@ -1,10 +1,14 @@
+import os
 from responses import *
+from dotenv import load_dotenv
+
 
 
 class MessageConsumer:
 
     def __init__(self):
-        self.api_key = "some key" # will be used for microservice calls in the future
+        load_dotenv()
+        self.api_key = os.getenv('API_KEY')
 
     def consume_message(self, content):
         content = content.lower()
