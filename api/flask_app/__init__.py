@@ -1,10 +1,10 @@
 from flask import Flask
-from flask_app.service.messagevalidator import MessageValidator
-from flask_app.service.messageprocessor import MessageProcessor
+from flask_app.services.messagevalidator import MessageValidator
+from flask_app.services.messageprocessor import MessageProcessor
 from google.oauth2 import service_account
 import os
 from dotenv import load_dotenv
-from flask_app.service.sheetservice import SheetService
+from flask_app.services.sheetservice import SheetService
 from flask_app.constants import SCOPES
 
 load_dotenv()

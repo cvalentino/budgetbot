@@ -24,13 +24,14 @@ class SheetService:
         except HTTPError as err:
             print(err)
 
-    def appendLineItem(self, month, lineitem):
-        rng = f'{month}!A1:R'
+    def appendLineItem(self, lineitem):
+        rng = f'{lineitem.dict["month"]}!A1:R'
         value_input_option = 'USER_ENTERED'
         values = lineitem.toSheetObject()
         request = self.service.spreadsheets().values().append(spreadsheetId=self.sid,
                                                               range=rng, valueInputOption=value_input_option, body={'values': values})
         response = request.execute()
+        return response
 
     def getCategories(self):
         self.categories = self.getValues('Overview!H1:W1')[0]

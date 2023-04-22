@@ -1,4 +1,4 @@
-from flask_app.model.lineitem import LineItem
+from flask_app.models.lineitem import LineItem
 
 
 class MessageProcessor:
