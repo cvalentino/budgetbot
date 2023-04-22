@@ -1,4 +1,7 @@
 from flask_app.models.lineitem import LineItem
+from flask_app.services.resources.messages import *
+from datetime import datetime
+import json
 
 
 class MessageProcessor:
@@ -15,3 +18,48 @@ class MessageProcessor:
             if k in line_item.dict.keys():
                 line_item.dict[k] = v
         return line_item
+    
+    @staticmethod
+    def parse_add_message_into_json(message):
+        floatable_indecies = []
+        split_message = message.split(" ")
+        for i, entry in enumerate(split_message):
+            try:
+                float(entry)
+                floatable_indecies.append(i)
+            except:
+                pass    
+        cost_index = max(floatable_indecies)
+        description = " ".join(split_message[1:cost_index])
+        cost = float(split_message[cost_index])
+        category = " ".join(split_message[cost_index+1:]).lower()
+        now = datetime.now()
+        message_dict = {}
+        message_dict["month"] = now.strftime("%b").upper()
+        message_dict["day"] = now.day
+        message_dict["description"] = description
+        message_dict["category"] = category
+        message_dict["cost"] = cost
+        return message_dict
+    
+    def post_line_item(self, request_json):
+        line_item = self.line_item_from_json(request_json)
+        sheet_response = self.sheet_service.appendLineItem(line_item)
+        return sheet_response['updates']['updatedRange']
+
+    def consume_message(self, request_json):
+        content = self.message_validator.get_message_content(request_json)
+        response_dict = {}
+        if content.startswith('help'):
+            response_dict['result'] = HELP_RESPONSE
+        elif content.startswith('add'):
+            content = self.message_validator.validate_add_message(content)
+            content_json = self.parse_add_message_into_json(content)
+            updated_range = self.post_line_item(content_json)
+            response_dict['result'] = ADD_RESPONSE
+            response_dict['validation'] = {}
+            response_dict['validation']['updated_range'] = updated_range
+            response_dict['validation']['line_item'] = content_json
+        else:
+            response_dict['result'] = UNKNOWN_COMMAND
+        return response_dict

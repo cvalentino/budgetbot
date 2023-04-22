@@ -5,7 +5,7 @@ from google.oauth2 import service_account
 import os
 from dotenv import load_dotenv
 from flask_app.services.sheetservice import SheetService
-from flask_app.constants import SCOPES
+from flask_app.services.resources.constants import SCOPES
 
 load_dotenv()
 KEY_PATH = os.getenv('key_path')
