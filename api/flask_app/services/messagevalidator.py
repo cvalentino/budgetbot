@@ -53,7 +53,23 @@ class MessageValidator:
         if len(split_content) < 4:
             raise ValueError(
                 "Message provided is missing some information")
+        # has a number 
+        if not self.get_floatable_indecies_of(split_content):
+            raise ValueError(
+                "Message provided does not include a number")
         return " ".join(split_content)
+    
+    @staticmethod
+    def get_floatable_indecies_of(split_message):
+        floatable_indecies = []
+        for i, entry in enumerate(split_message):
+            try:
+                float(entry)
+                floatable_indecies.append(i)
+            except:
+                pass
+        return floatable_indecies
+
     
     def get_message_content(self, request_json):
         if "message" not in request_json.keys():

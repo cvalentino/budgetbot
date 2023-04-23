@@ -12,3 +12,15 @@ INVALID_LINEITEM_PAYLOAD_STRING_DAY = {
     "month": "APR", "day": "NAN", "description": "TEST-DELTEME", "category": "groceries", "cost": 71.78}
 INVALID_LINEITEM_PAYLOAD_STRING_COST = {
     "month": "APR", "day": 2, "description": "TEST-DELTEME", "category": "groceries", "cost": "NAN"}
+VALID_HELP_MESSAGE = {
+    'message': 'Help'}
+UNKNOWN_MESSAGE = {
+    'message': 'blahblahblah'}
+VALID_ADD_MESSAGE = {
+    'message': 'add TEST DELETEME 15 Wealth Building'}
+VALID_ADD_MESSAGE_EXTRA_SPACES = {
+    'message': ' add   TEST    DELETEME  15 Wealth    Building  '}
+INVALID_ADD_MESSAGE_INCOMPLETE = {
+    'message': 'add TEST DELETEME'}
+INVALID_ADD_MESSAGE_NO_COST = {
+    'message': 'add TEST DELETEME beep Wealth Building'}

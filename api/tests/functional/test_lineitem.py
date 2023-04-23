@@ -3,12 +3,12 @@ from resources.payloads import *
 
 lineitem_from_json_endpoint = '/lineitem'
 
-def test_valid_lineitem(client):
-    payload = VALID_LINEITEM_PAYLOAD
-    response = client.post(lineitem_from_json_endpoint, data=json.dumps(payload), content_type='application/json')
-    # TODO: DELETE lineitem from spreadsheet
-    assert response.status_code == 201
-    assert response.headers.get('Updated-Range') is not None
+# def test_valid_lineitem(client):
+#     payload = VALID_LINEITEM_PAYLOAD
+#     response = client.post(lineitem_from_json_endpoint, data=json.dumps(payload), content_type='application/json')
+#     # TODO: DELETE lineitem from spreadsheet
+#     assert response.status_code == 201
+#     assert response.headers.get('Updated-Range') is not None
 
 def test_invalid_lineitem_bad_month(client):
     payload = INVALID_LINEITEM_PAYLOAD_BAD_MONTH

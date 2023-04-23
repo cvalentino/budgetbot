@@ -1,4 +1,3 @@
-from flask import Flask
 from flask_app.services.messagevalidator import MessageValidator
 from flask_app.services.messageprocessor import MessageProcessor
 from google.oauth2 import service_account
