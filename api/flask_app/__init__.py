@@ -4,10 +4,9 @@ from google.oauth2 import service_account
 import os
 from dotenv import load_dotenv
 from flask_app.services.sheetservice import SheetService
-from flask_app.services.resources.constants import SCOPES
+from flask_app.services.resources.constants import SCOPES, KEY_PATH
 
 load_dotenv()
-KEY_PATH = os.getenv('KEY_PATH')
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
 
 creds = service_account.Credentials.from_service_account_file(
