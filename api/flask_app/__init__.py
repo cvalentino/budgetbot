@@ -7,8 +7,8 @@ from flask_app.services.sheetservice import SheetService
 from flask_app.services.resources.constants import SCOPES
 
 load_dotenv()
-KEY_PATH = os.getenv('key_path')
-SPREADSHEET_ID = os.getenv('spreadsheet_id')
+KEY_PATH = os.getenv('KEY_PATH')
+SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
 
 creds = service_account.Credentials.from_service_account_file(
     KEY_PATH, scopes=SCOPES)

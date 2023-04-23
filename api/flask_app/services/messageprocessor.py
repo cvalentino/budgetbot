@@ -17,10 +17,11 @@ class MessageProcessor:
             if k in line_item.dict.keys():
                 line_item.dict[k] = v
         return line_item
-    
+
     def parse_add_message_into_json(self, message):
         split_message = message.split(" ")
-        floatable_indecies = self.message_validator.get_floatable_indecies_of(split_message)
+        floatable_indecies = self.message_validator.get_floatable_indecies_of(
+            split_message)
         cost_index = max(floatable_indecies)
         description = " ".join(split_message[1:cost_index])
         cost = float(split_message[cost_index])
@@ -33,7 +34,7 @@ class MessageProcessor:
         message_dict["category"] = category
         message_dict["cost"] = cost
         return message_dict
-    
+
     def post_line_item(self, request_json):
         line_item = self.line_item_from_json(request_json)
         sheet_response = self.sheet_service.appendLineItem(line_item)
@@ -42,9 +43,9 @@ class MessageProcessor:
     def consume_message(self, request_json):
         content = self.message_validator.get_message_content(request_json)
         response_dict = {}
-        if content.startswith('help'):
+        if content.lower().startswith('help'):
             response_dict['message'] = HELP_RESPONSE
-        elif content.startswith('add'):
+        elif content.lower().startswith('add'):
             content = self.message_validator.validate_add_message(content)
             content_json = self.parse_add_message_into_json(content)
             updated_range = self.post_line_item(content_json)

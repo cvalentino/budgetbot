@@ -4,3 +4,4 @@
 __pycache__/
 notebooks/*
 *service_account.json
+cmds.txt
