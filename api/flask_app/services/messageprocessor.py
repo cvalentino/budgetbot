@@ -9,7 +9,7 @@ class MessageProcessor:
         self.sheet_service = sheet_service
         self.message_validator = message_validator
 
-    def line_item_from_json(self, json_dict):
+    def line_item_from_json(self, json_dict: dict):
         json_dict = self.message_validator.validate_line_item_json(json_dict)
         line_item = LineItem(self.sheet_service.categories)
         line_item.dict[json_dict["category"]] = json_dict["cost"]
@@ -18,7 +18,7 @@ class MessageProcessor:
                 line_item.dict[k] = v
         return line_item
 
-    def parse_add_message_into_json(self, message):
+    def parse_add_message_into_json(self, message: str):
         split_message = message.split(" ")
         floatable_indecies = self.message_validator.get_floatable_indecies_of(
             split_message)
@@ -35,24 +35,27 @@ class MessageProcessor:
         message_dict["cost"] = cost
         return message_dict
 
-    def post_line_item(self, request_json):
+    def post_line_item(self, request_json: dict):
         line_item = self.line_item_from_json(request_json)
         sheet_response = self.sheet_service.appendLineItem(line_item)
         return sheet_response['updates']['updatedRange']
+    
+    def process_add_message(self, content: str, response_dict: dict):
+        content = self.message_validator.validate_add_message(content)
+        content_json = self.parse_add_message_into_json(content)
+        updated_range = self.post_line_item(content_json)
+        response_dict['message'] = ADD_RESPONSE
+        response_dict['validation'] = {}
+        response_dict['validation']['updated_range'] = updated_range
+        response_dict['validation']['line_item'] = content_json
 
-    def consume_message(self, request_json):
+    def consume_message(self, request_json: dict):
         content = self.message_validator.get_message_content(request_json)
         response_dict = {}
         if content.lower().startswith('help'):
             response_dict['message'] = HELP_RESPONSE
         elif content.lower().startswith('add'):
-            content = self.message_validator.validate_add_message(content)
-            content_json = self.parse_add_message_into_json(content)
-            updated_range = self.post_line_item(content_json)
-            response_dict['message'] = ADD_RESPONSE
-            response_dict['validation'] = {}
-            response_dict['validation']['updated_range'] = updated_range
-            response_dict['validation']['line_item'] = content_json
+            self.process_add_message(content, response_dict)
         else:
             response_dict['message'] = UNKNOWN_COMMAND
         return response_dict
