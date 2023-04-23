@@ -42,7 +42,7 @@ class MessageValidator:
             raise ValueError(
                 "Invalid message type provided: {}".format(type(content)))
         # validate message is in this format: add <Description> <Cost> <Category>
-        split_content = content.split(" ")
+        split_content = content.split()
         # clean up extra whitespace
         split_content = [s.strip() for s in split_content if s.strip()]
         # starts with add

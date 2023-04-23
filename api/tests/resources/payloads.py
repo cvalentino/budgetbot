@@ -14,6 +14,8 @@ INVALID_LINEITEM_PAYLOAD_STRING_COST = {
     "month": "APR", "day": 2, "description": "TEST-DELTEME", "category": "groceries", "cost": "NAN"}
 VALID_HELP_MESSAGE = {
     'message': 'Help'}
+VALID_CATEGORIES_MESSAGE = {
+    'message': 'Categories'}
 UNKNOWN_MESSAGE = {
     'message': 'blahblahblah'}
 VALID_ADD_MESSAGE = {
