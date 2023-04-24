@@ -8,6 +8,7 @@ from flask_app.services.resources.constants import SCOPES, KEY_PATH
 
 load_dotenv()
 SPREADSHEET_ID = os.getenv('SPREADSHEET_ID')
+API_KEY = os.getenv('API_KEY')
 
 creds = service_account.Credentials.from_service_account_file(
     KEY_PATH, scopes=SCOPES)
