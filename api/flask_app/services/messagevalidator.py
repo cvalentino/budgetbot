@@ -9,7 +9,7 @@ class MessageValidator:
         self.valid_months = [calendar.month_abbr[i].upper()
                              for i in range(1, 13)]
 
-    def validate_line_item_json(self, json_dict: dict):
+    def validate_line_item_json(self, json_dict: dict) -> dict:
         # Filter json_dict fields
         json_dict = {k: v for k, v in json_dict.items() if k in LINE_ITEM_KEYS}
         # Validate required fields are present
@@ -37,7 +37,7 @@ class MessageValidator:
                 "Invalid cost type provided: {}".format(type(json_dict["cost"])))
         return json_dict
 
-    def validate_add_message(self, content: str):
+    def validate_add_message(self, content: str) -> str:
         if type(content) is not str:
             raise ValueError(
                 "Invalid message type provided: {}".format(type(content)))
@@ -60,7 +60,7 @@ class MessageValidator:
         return " ".join(split_content)
     
     @staticmethod
-    def get_floatable_indecies_of(split_message: list[str]):
+    def get_floatable_indecies_of(split_message: list[str]) -> list[int]:
         floatable_indecies = []
         for i, entry in enumerate(split_message):
             try:
@@ -71,7 +71,7 @@ class MessageValidator:
         return floatable_indecies
 
     
-    def get_message_content(self, request_json: dict):
+    def get_message_content(self, request_json: dict) -> str:
         if "message" not in request_json.keys():
             raise ValueError(
                 "Request JSON missing 'message' key")

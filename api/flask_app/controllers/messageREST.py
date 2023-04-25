@@ -12,5 +12,8 @@ def handle_message():
         response = {'message': f'Request failed due to: {str(e)}'}
         return jsonify(response), 400
     response = response_message
+    if 'validation' in response.keys():
+        # added line item to spreadsheet
+        return jsonify(response), 201
     return jsonify(response), 200
 
