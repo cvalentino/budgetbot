@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgetbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgetbot
+  template:
+    metadata:
+      labels:
+        app: budgetbot
+    spec:
+      containers:
+        - name: api
+          image: registry.digitalocean.com/cvalentino/budgetbot-api:latest
+        - name: discordbot
+          image: registry.digitalocean.com/cvalentino/budgetbot-discordbot:latest

@@ -42,7 +42,7 @@ class MessageProcessor:
         now = datetime.now()
         message_dict = {}
         message_dict["month"] = now.strftime("%b").upper()
-        message_dict["day"] = now.day
+        message_dict["day"] = now.day # TODO: timezone consideration (move from UTC to mountain?)
         message_dict["description"] = description
         message_dict["category"] = category
         message_dict["cost"] = cost
@@ -51,6 +51,7 @@ class MessageProcessor:
     def post_line_item(self, request_json: dict) -> str:
         line_item = self.line_item_from_json(request_json)
         sheet_response = self.sheet_service.appendLineItem(line_item)
+        # TODO: maybe return whole sheet_response?
         return sheet_response['updates']['updatedRange']
     
     def line_item_from_json(self, json_dict: dict) -> LineItem:

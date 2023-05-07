@@ -1,1 +1,1 @@
-gunicorn --access-logfile=/app/logs/access.log --error-logfile=/app/logs/error.log -b 0.0.0.0:8080 budget_bot_api:gunicorn_app
+gunicorn --access-logfile=/app/logs/access.log --error-logfile=/app/logs/error.log -b 0.0.0.0:5000 budget_bot_api:gunicorn_app
