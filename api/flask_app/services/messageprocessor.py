@@ -26,11 +26,9 @@ class MessageProcessor:
     def process_add_message(self, content: str, response_dict: dict) -> dict:
         content = self.message_validator.validate_add_message(content)
         content_json = self.parse_add_message_into_json(content)
-        updated_range = self.post_line_item(content_json)
-        response_dict['message'] = ADD_RESPONSE
-        response_dict['validation'] = {}
-        response_dict['validation']['updated_range'] = updated_range
-        response_dict['validation']['line_item'] = content_json
+        _ = self.post_line_item(content_json)
+        response_dict['message'] = SUCCESSFUL_ADD.format(content_json['month'], content_json['day'], \
+                                           content_json['description'], content_json['cost'], content_json['category'].title())
         return response_dict
 
     def parse_add_message_into_json(self, message: str) -> dict:
